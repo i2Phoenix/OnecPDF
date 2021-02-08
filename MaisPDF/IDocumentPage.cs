@@ -12,7 +12,33 @@ namespace MaisPDF
 
         void ЗавершитьОтрисовку();
 
-        bool НаписатьТекст(string text, double left, double top, double width, double height, string fontName, double fontSize, int fontStyle, int textAlign);
+        void УстановитьШрифт(string fontName, double fontSize, int fontStyle);
+
+        void УстановитьЦветCMYK(double cyan, double magenta, double yellow, double black);
+
+        void УстановитьЦветRGB(int red, int green, int blue);
+
+        bool Текст(string text, double left, double top, double width, double height, int textAlign);
+
+        bool Штрихкод(string barcodeValue, double left, double top, double width, double height);
+
+        bool ЗаполненныйПрямоугольник(double left, double top, double width, double height);
+
+        bool Прямоугольник(double left, double top, double width, double height, double penWidth);
+
+        bool Линия(double x1, double y1, double x2, double y2, double width);
+
+        bool ЗагрузитьВекторноеИзображение(byte[] imageContent);
+        bool ЗагрузитьРастовоеИзображение(byte[] imageContent);
+
+        double ШиринаИзображения();
+        double ВысотаИзображения();
+
+        bool Изображение(double left, double top);
+
+        bool ИзображениеВписать(double left, double top, double width, double height);
+
+        bool ИзображениеЦентр(double left, double top, double width, double height);
     }
 
     [Guid("866DEE21-909F-4ACE-91EB-50622C518D79")]

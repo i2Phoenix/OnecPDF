@@ -68,6 +68,7 @@
     <Compile Include="Document.cs" />
     <Compile Include="DocumentPage.cs" />
     <Compile Include="IDocumentPage.cs" />
+    <Compile Include="MBarcodeEAN13.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
