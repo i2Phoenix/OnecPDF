@@ -11,26 +11,28 @@ namespace MaisPDF
     [Guid("B13C27CB-F053-42E5-A2C3-B40834EA8FDE")]
     [ClassInterface(ClassInterfaceType.None)]
     [ComVisible(true)]
-    public class DocumentPage : IDocumentPage
+    public class Страница : IСтраница
     {
-        private Document Owner { get; set; }
-        private PdfPage Page { get; set; }
-        private XGraphics GfxContext { get; set; }
-
         private XColor DebugImageColor = XColor.FromCmyk(0.40, 0.28, 0.88, 0, 0);
         private XColor DebugTextColor = XColor.FromCmyk(0.40, 0.82, 0, 1, 0);
 
+        private Документ Owner { get; set; }
+        private PdfPage Page { get; set; }
+
+        private XGraphics GfxContext { get; set; }
         private XFont CurrentFont { get; set; }
         private XColor CurrentColor { get; set; }
         private XImage CurrentImage { get; set; }
 
-        public DocumentPage(Document document, PdfPage page)
+        public Страница(Документ document, PdfPage page)
         {
             Owner = document;
             Page = page;
 
             CurrentFont = new XFont("OpenSans", 12.5, XFontStyle.Regular);
             CurrentColor = XColor.FromCmyk(255, 255, 255, 0);
+            CurrentImage = null;
+            GfxContext = null;
         }
 
         public void НачатьОтрисовку()
@@ -43,6 +45,38 @@ namespace MaisPDF
         {
             GfxContext.Dispose();
             GfxContext = null;
+        }
+
+        public double ШиринаСтраницы()
+        {
+            try
+            {
+                if (Page != null)
+                    return Page.Width;
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Owner.ErrorMessage = ex.Message;
+                return 0;
+            }
+        }
+
+        public double ВысотаСтраницы()
+        {
+            try
+            {
+                if (Page != null)
+                    return Page.Height;
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Owner.ErrorMessage = ex.Message;
+                return 0;
+            }
         }
 
         public void УстановитьШрифт(string fontName, double fontSize, int fontStyle)
@@ -114,7 +148,7 @@ namespace MaisPDF
 
                 var rect = new XRect(new XPoint(new Unit(left, UnitType.Millimeter), new Unit(top, UnitType.Millimeter)), new XSize(new Unit(width, UnitType.Millimeter), new Unit(height, UnitType.Millimeter)));
 
-                if (Owner.Отладка)
+                if (Owner.DebugDraw)
                 {
                     GfxContext.DrawRectangle(new XSolidBrush(DebugTextColor), rect);
                 }
@@ -127,7 +161,7 @@ namespace MaisPDF
             }
             catch (Exception ex)
             {
-                Owner.Ошибка = ex.Message;
+                Owner.ErrorMessage = ex.Message;
                 return false;
             }
         }
@@ -144,7 +178,7 @@ namespace MaisPDF
                 barCode.EndChar = Convert.ToChar("*");
                 barCode.Direction = CodeDirection.LeftToRight;
 
-                if (Owner.Отладка)
+                if (Owner.DebugDraw)
                 {
                     GfxContext.DrawRectangle(new XSolidBrush(DebugTextColor), XUnit.FromMillimeter(left), XUnit.FromMillimeter(top), XUnit.FromMillimeter(width), XUnit.FromMillimeter(height));
                 }
@@ -155,7 +189,7 @@ namespace MaisPDF
             }
             catch (Exception ex)
             {
-                Owner.Ошибка = ex.Message;
+                Owner.ErrorMessage = ex.Message;
                 return false;
             }
         }
@@ -170,7 +204,7 @@ namespace MaisPDF
             }
             catch (Exception ex)
             {
-                Owner.Ошибка = ex.Message;
+                Owner.ErrorMessage = ex.Message;
                 return false;
             }
         }
@@ -185,7 +219,7 @@ namespace MaisPDF
             }
             catch (Exception ex)
             {
-                Owner.Ошибка = ex.Message;
+                Owner.ErrorMessage = ex.Message;
                 return false;
             }
         }
@@ -200,7 +234,7 @@ namespace MaisPDF
             }
             catch (Exception ex)
             {
-                Owner.Ошибка = ex.Message;
+                Owner.ErrorMessage = ex.Message;
                 return false;
             }
         }
@@ -218,7 +252,7 @@ namespace MaisPDF
             }
             catch (Exception ex)
             {
-                Owner.Ошибка = ex.Message;
+                Owner.ErrorMessage = ex.Message;
                 return false;
             }
         }
@@ -236,7 +270,7 @@ namespace MaisPDF
             }
             catch (Exception ex)
             {
-                Owner.Ошибка = ex.Message;
+                Owner.ErrorMessage = ex.Message;
                 return false;
             }
         }
@@ -252,7 +286,7 @@ namespace MaisPDF
             }
             catch (Exception ex)
             {
-                Owner.Ошибка = ex.Message;
+                Owner.ErrorMessage = ex.Message;
                 return 0;
             }
         }
@@ -268,10 +302,11 @@ namespace MaisPDF
             }
             catch (Exception ex)
             {
-                Owner.Ошибка = ex.Message;
+                Owner.ErrorMessage = ex.Message;
                 return 0;
             }
         }
+
         public bool Изображение(double left, double top)
         {
             try
@@ -286,7 +321,7 @@ namespace MaisPDF
 
                     GfxContext.DrawImage(CurrentImage, imageRect);
 
-                    if (Owner.Отладка)
+                    if (Owner.DebugDraw)
                     {
                         GfxContext.DrawRectangle(new XSolidBrush(DebugImageColor), imageRect);
                     }
@@ -300,7 +335,7 @@ namespace MaisPDF
             }
             catch (Exception ex)
             {
-                Owner.Ошибка = ex.Message;
+                Owner.ErrorMessage = ex.Message;
                 return false;
             }
         }
@@ -317,7 +352,7 @@ namespace MaisPDF
 
                     GfxContext.DrawImage(CurrentImage, imageRect);
 
-                    if (Owner.Отладка)
+                    if (Owner.DebugDraw)
                     {
                         GfxContext.DrawRectangle(new XSolidBrush(DebugImageColor), imageRect);
                     }
@@ -331,7 +366,7 @@ namespace MaisPDF
             }
             catch (Exception ex)
             {
-                Owner.Ошибка = ex.Message;
+                Owner.ErrorMessage = ex.Message;
                 return false;
             }
         }
@@ -373,7 +408,7 @@ namespace MaisPDF
 
                     GfxContext.DrawImage(CurrentImage, imageRect);
 
-                    if (Owner.Отладка)
+                    if (Owner.DebugDraw)
                     {
                         GfxContext.DrawRectangle(new XSolidBrush(DebugImageColor), imageRect);
                         GfxContext.DrawRectangle(new XSolidBrush(DebugImageColor), placeholderRect);
@@ -388,10 +423,9 @@ namespace MaisPDF
             }
             catch (Exception ex)
             {
-                Owner.Ошибка = ex.Message;
+                Owner.ErrorMessage = ex.Message;
                 return false;
             }
         }
-
     }
 }

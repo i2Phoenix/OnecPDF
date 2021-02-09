@@ -31,6 +31,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+    <RegisterForComInterop>true</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -65,10 +67,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Document.cs" />
-    <Compile Include="DocumentPage.cs" />
-    <Compile Include="IDocumentPage.cs" />
-    <Compile Include="MBarcodeEAN13.cs" />
+    <Compile Include="PDF\IДокумент.cs" />
+    <Compile Include="PDF\Документ.cs" />
+    <Compile Include="PDF\Страница.cs" />
+    <Compile Include="PDF\IСтраница.cs" />
+    <Compile Include="Utils\MBarcodeEAN13.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

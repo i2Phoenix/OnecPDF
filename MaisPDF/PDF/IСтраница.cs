@@ -1,17 +1,20 @@
-﻿using PdfSharp.Drawing;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace MaisPDF
 {
     [Guid("4EC03727-0D73-44F2-A812-5F4579333025")]
     [ComVisible(true)]
-    public interface IDocumentPage
+    public interface IСтраница
     {
         void НачатьОтрисовку();
 
         void ЗавершитьОтрисовку();
 
+        double ШиринаСтраницы();
+
+        double ВысотаСтраницы();
+        
         void УстановитьШрифт(string fontName, double fontSize, int fontStyle);
 
         void УстановитьЦветCMYK(double cyan, double magenta, double yellow, double black);
@@ -29,9 +32,11 @@ namespace MaisPDF
         bool Линия(double x1, double y1, double x2, double y2, double width);
 
         bool ЗагрузитьВекторноеИзображение(byte[] imageContent);
+
         bool ЗагрузитьРастовоеИзображение(byte[] imageContent);
 
         double ШиринаИзображения();
+
         double ВысотаИзображения();
 
         bool Изображение(double left, double top);
@@ -39,23 +44,5 @@ namespace MaisPDF
         bool ИзображениеВписать(double left, double top, double width, double height);
 
         bool ИзображениеЦентр(double left, double top, double width, double height);
-    }
-
-    [Guid("866DEE21-909F-4ACE-91EB-50622C518D79")]
-    [ComVisible(true)]
-    public enum TextAlign
-    {
-        BaseLineLeft = 0,
-        TopLeft = 1,
-        CenterLeft = 2,
-        BottomLeft = 3,
-        BaseLineCenter = 4,
-        TopCenter = 5,
-        Center = 6,
-        BottomCenter = 7,
-        BaseLineRight = 8,
-        TopRight = 9,
-        CenterRight = 10,
-        BottomRight = 11
     }
 }
