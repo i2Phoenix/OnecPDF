@@ -10,23 +10,14 @@ namespace MaisPDF
         private XRect m_leftBlock = new XRect();
         private XRect m_rightBlock = new XRect();
 
-        /// <summary>
-        /// Initializes a new instance of EAN13.
-        /// </summary>
         public MBarcodeEAN13() : base("", XSize.Empty, CodeDirection.LeftToRight)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of EAN13.
-        /// </summary>
         public MBarcodeEAN13(string code) : base(code, XSize.Empty, CodeDirection.LeftToRight)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of EAN13.
-        /// </summary>
         public MBarcodeEAN13(string code, XSize size) : base(code, size, CodeDirection.LeftToRight)
         {
         }
@@ -372,9 +363,6 @@ namespace MaisPDF
             }
         };
 
-        /// <summary>
-        /// Renders the bar code.
-        /// </summary>
         protected override void Render(XGraphics gfx, XBrush brush, XFont font, XPoint position)
         {
             XGraphicsState state = gfx.Save();
@@ -383,9 +371,8 @@ namespace MaisPDF
             info.CurrPosInString = 0;
             info.CurrPos = position - CodeBase.CalcDistance(AnchorType.TopLeft, Anchor, Size);
 
-            //   EAN13 Barcode should be a total of 113 modules wide.
-            int numberOfBars = 12; // The length - country code
-            numberOfBars *= 7;     // Each character has 7 bars
+            int numberOfBars = 12;
+            numberOfBars *= 7;
             numberOfBars += 2 * (Quite.Length + Leading.Length);
             numberOfBars += Separator.Length;
             info.ThinBarWidth = ((double)this.Size.Width / (double)numberOfBars);
@@ -594,10 +581,8 @@ namespace MaisPDF
             XPoint pos = new XPoint(info.Position.X, y);
             XGraphicsPath path = new XGraphicsPath();
             path.AddString(Text.Substring(0, 1), info.Font.FontFamily, info.Font.Style, info.Font.Size, pos, XStringFormats.TopLeft);
-            //info.Gfx.DrawString(Text.Substring(0, 1), info.Font, info.Brush, new XRect(pos, Size), XStringFormats.TopLeft);
             info.Gfx.DrawRectangle(XBrushes.White, m_leftBlock);
             path.AddString(Text.Substring(1, 6), info.Font.FontFamily, info.Font.Style, info.Font.Size, m_leftBlock, XStringFormats.TopCenter);
-            //info.Gfx.DrawString(Text.Substring(1, 6), info.Font, info.Brush, m_leftBlock, XStringFormats.TopCenter);
             info.Gfx.DrawRectangle(XBrushes.White, m_rightBlock);
             string text = Text.Substring(7);
 
@@ -606,7 +591,6 @@ namespace MaisPDF
 
             pos = new XPoint(m_rightBlock.Left, m_rightBlock.Y);
             path.AddString(text, info.Font.FontFamily, info.Font.Style, info.Font.Size, m_rightBlock, XStringFormats.TopCenter);
-            //info.Gfx.DrawString(text, info.Font, info.Brush, m_rightBlock, XStringFormats.TopCenter);
             info.Gfx.DrawPath(null, info.Brush, path);
         }
 
@@ -626,8 +610,6 @@ namespace MaisPDF
             return result.ToString();
         }
 
-        /// <summary>Validates the text string to be coded</summary>
-        /// <param name="text">String - The text string to be coded</param>
         protected override void CheckCode(string text)
         {
             if (text == null)

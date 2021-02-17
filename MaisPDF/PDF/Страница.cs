@@ -194,6 +194,23 @@ namespace MaisPDF
             }
         }
 
+        public bool QRКод(string barcodeValue, double left, double top, double scale)
+        {
+            try
+            {
+                var barCode = new MBarcodeQR(barcodeValue, scale);
+
+                GfxContext.DrawBarCode(barCode, new XSolidBrush(CurrentColor), CurrentFont, new XPoint(XUnit.FromMillimeter(left), XUnit.FromMillimeter(top)));
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Owner.ErrorMessage = ex.Message;
+                return false;
+            }
+        }
+
         public bool Линия(double x1, double y1, double x2, double y2, double width)
         {
             try
