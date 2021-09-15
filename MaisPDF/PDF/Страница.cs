@@ -194,11 +194,11 @@ namespace MaisPDF
             }
         }
 
-        public bool QRКод(string barcodeValue, double left, double top, double scale)
+        public bool QRКод(string barcodeValue, double left, double top, double scale, int version)
         {
             try
             {
-                var barCode = new MBarcodeQR(barcodeValue, scale);
+                var barCode = new MBarcodeQR(barcodeValue, scale, version);
 
                 GfxContext.DrawBarCode(barCode, new XSolidBrush(CurrentColor), CurrentFont, new XPoint(XUnit.FromMillimeter(left), XUnit.FromMillimeter(top)));
 

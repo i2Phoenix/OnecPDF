@@ -25,7 +25,7 @@ namespace MaisPDF
 
         bool Штрихкод(string barcodeValue, double left, double top, double width, double height);
 
-        bool QRКод(string barcodeValue, double left, double top, double scale);
+        bool QRКод(string barcodeValue, double left, double top, double scale, int version);
 
         bool ЗаполненныйПрямоугольник(double left, double top, double width, double height);
 

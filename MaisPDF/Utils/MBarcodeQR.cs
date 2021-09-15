@@ -283,11 +283,11 @@ namespace MaisPDF
 
 		#region Public Constructors
 
-		public MBarcodeQR(string code, double scale = 1) : base(code, XSize.Empty, CodeDirection.LeftToRight)
+		public MBarcodeQR(string code, double scale = 1, int version = 7) : base(code, XSize.Empty, CodeDirection.LeftToRight)
 		{
 			_errorCorrect = QrErrorCorrection.M;
 			_encodeMode = QrEncodeMode.Byte;
-			_version = 7;
+			_version = version;
 
 			_structureAppendN = 0;
 			_structureAppendM = 0;
